@@ -265,15 +265,19 @@ select.form-input{cursor:pointer}
     background:#fff;z-index:190;
     border-radius:18px 18px 0 0;
     box-shadow:0 -4px 28px rgba(0,0,0,.13);
-    overflow-y:auto;
-    max-height:calc(100vh - 110px);
-    padding:6px 16px 20px;
-    transition:transform .28s ease;
+    display:flex;flex-direction:column;
+    height:calc(100vh - 46px - 56px);
+    overflow:hidden;
   }
-  .mob-panel.show{display:block}
+  .mob-panel.show{display:flex}
   .mob-panel-handle{
     width:36px;height:4px;background:var(--border);
-    border-radius:2px;margin:6px auto 14px;flex-shrink:0;
+    border-radius:2px;margin:8px auto 0;flex-shrink:0;
+  }
+  #mob-panel-content{
+    flex:1;overflow-y:auto;padding:10px 16px 20px;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
   }
   .mob-panel-title{
     font-size:13px;font-weight:700;color:var(--text2);
@@ -334,7 +338,7 @@ select.form-input{cursor:pointer}
       <span class="detail-header-name" id="dh-name"></span>
       <span class="detail-header-dates" id="dh-dates"></span>
     </div>
-    <button class="btn btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openEditTripModal()">✏️ 수정</button>
+
   </div>
 
   <div class="detail-body">
@@ -917,7 +921,7 @@ function renderGroup(container,label,pins){
     else if(p.type==='done') dotHtml=`<div class="pin-dot done">✅</div>`;
     else { const c=DAY_COLORS[(p.day-1)%DAY_COLORS.length]; dotHtml=`<div class="pin-dot" style="background:${c}">${p.order||''}</div>`; }
     const metaLine = p.type==='schedule' ? `Day ${p.day}${p.visitTime?' · '+p.visitTime:''}${p.memo?' · '+p.memo.slice(0,18):''}` : `${p.address?p.address.slice(0,24):''}${p.memo?' · '+p.memo.slice(0,18):''}`;
-    item.innerHTML=`${dotHtml}<div class="pin-info"><div class="pin-name">${ce} ${p.name}</div><div class="pin-meta">${metaLine}</div></div><div class="pin-actions"><button class="icon-btn" onclick="focusPin('${p.id}');event.stopPropagation()">👁</button><button class="icon-btn" onclick="editPinById('${p.id}');event.stopPropagation()">✏️</button></div>`;
+    item.innerHTML=`${dotHtml}<div class="pin-info"><div class="pin-name">${ce} ${p.name}</div><div class="pin-meta">${metaLine}</div></div><div class="pin-actions"><button class="icon-btn" onclick="focusPin('${p.id}');event.stopPropagation()">🗺️</button></div>`;
     item.onclick=()=>focusPin(p.id);
     container.appendChild(item);
   });
